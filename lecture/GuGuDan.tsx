@@ -34,8 +34,9 @@ const GuGuDan = () => {
         <form onSubmit={onSubmitForm}>
             <input ref={inputEl} type="number" value={value} onChange={e => setValue(e.target.value)}/>
         </form>
+        <div>{result}</div>
         </>
-    )
+    );
 }
 
 
