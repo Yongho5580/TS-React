@@ -1,7 +1,14 @@
 import * as React from "react";
 import { Component } from "react";
 
-class GuGuDan extends React.Component {
+interface State {
+  first: number;
+  second: number;
+  value: string;
+  result: string;
+}
+
+class GuGuDan extends React.Component<{}, State> {
   state = {
     first: Math.ceil(Math.random() * 9),
     second: Math.ceil(Math.random() * 9),
