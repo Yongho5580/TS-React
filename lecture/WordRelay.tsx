@@ -27,7 +27,7 @@ const WordRelay = () => {
       </form>
       <div>{result}</div>
     </>
-  ); //asdfasfdasdfadsf
+  ); //asdfasfdasdfadsfasdfasfd
 };
 
 export default WordRelay;
