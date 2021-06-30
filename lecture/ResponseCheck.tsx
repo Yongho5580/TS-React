@@ -17,11 +17,11 @@ const ResponseCheck = () => {
         startTime.current = new Date().getTime();
       }, Math.floor(Math.random() * 1000) + 2000);
       setState("ready");
-      setMessage("초록색이 되면 클릭하세요.");
+      setMessage("지금 클릭이라는 문구가 뜨면 클릭하세요.");
     } else if (state === "ready") {
       clearTimeout(timeout.current!);
       setState("waiting");
-      setMessage("너무 성급하시군요! 초록색이 된 후에 클릭하세요");
+      setMessage("지금 클릭이라는 문구가 뜨면 클릭하세요");
     } else if (state === "now") {
       endTime.current = new Date().getTime();
       setState("waiting");
