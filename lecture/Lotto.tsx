@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useRef, useEffect, useMemo, useCallback } from "react";
+import Ball from "./Ball";
 
 function getWinNumbers() {
   const candidate = Array(45)
@@ -24,6 +25,31 @@ const Lotto = () => {
   const [redo, setRedo] = useState(false);
   const timeouts = useRef<number[]>([]);
 
+  useEffect(() => {
+    for (let i = 0; i < winNumbers.length - 1; i++) {
+      timeouts.current[i] = window.setTimeout(() => {
+        setWinBalls((prevBalls) => [...prevBalls, winNumbers[i]]);
+      }, (i + 1) * 1000);
+    }
+    timeouts.current[6] = window.setTimeout(() => {
+      setBonus(winNumbers[6]);
+      setRedo(true);
+    }, 7000);
+    return () => {
+      timeouts.current.forEach((v) => {
+        clearTimeout(v);
+      });
+    };
+  }, [timeouts.current]);
+
+  const onClickRedo = useCallback(() => {
+    setWinNumbers(getWinNumbers());
+    setWinBalls([]);
+    setBonus(null);
+    setRedo(false);
+    timeouts.current = [];
+  }, [winNumbers]);
+
   return (
     <>
       <div>당첨 숫자</div>
@@ -38,3 +64,5 @@ const Lotto = () => {
     </>
   );
 };
+
+export default Lotto;
