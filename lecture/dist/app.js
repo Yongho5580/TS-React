@@ -9,14 +9,25 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./RSP.tsx":
-/*!*****************!*\
-  !*** ./RSP.tsx ***!
-  \*****************/
+/***/ "./Ball.tsx":
+/*!******************!*\
+  !*** ./Ball.tsx ***!
+  \******************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
-eval("\nexports.__esModule = true;\nvar React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\nvar react_1 = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\nvar rspCoords = {\n    바위: \"0\",\n    가위: \"-142px\",\n    보: \"-284px\"\n};\nvar scores = {\n    가위: 1,\n    바위: 0,\n    보: -1\n};\nvar computerChoice = function (imgCoords) {\n    return Object.keys(rspCoords).find(function (k) {\n        return rspCoords[k] === imgCoords;\n    });\n};\nvar RSP = function () {\n    var _a = react_1.useState(\"\"), result = _a[0], setResult = _a[1];\n    var _b = react_1.useState(rspCoords.바위), imgCoord = _b[0], setImgCoord = _b[1];\n    var _c = react_1.useState(0), score = _c[0], setScore = _c[1];\n    var interval = react_1.useRef();\n    react_1.useEffect(function () {\n        console.log(\"다시 실행\");\n        interval.current = window.setInterval(changeHand, 100);\n        return function () {\n            console.log(\"종료\");\n            clearInterval(interval.current);\n        };\n    }, [imgCoord]);\n    var changeHand = function () {\n        if (imgCoord === rspCoords.바위) {\n            setImgCoord(rspCoords.가위);\n        }\n        else if (imgCoord === rspCoords.가위) {\n            setImgCoord(rspCoords.보);\n        }\n        else if (imgCoord === rspCoords.보) {\n            setImgCoord(rspCoords.바위);\n        }\n    };\n    var onClickBtn = function (choice) { return function () {\n        clearInterval(interval.current);\n        var myScore = scores[choice];\n        var cpuScore = scores[computerChoice(imgCoord)];\n        var diff = myScore - cpuScore;\n        if (diff === 0) {\n            setResult(\"비겼습니다\");\n        }\n        else if ([-1, 2].includes(diff)) {\n            setResult(\"이겼습니다!\");\n        }\n        else {\n            setResult(\"졌습니다!\");\n            setScore(function (prev) { return prev - 1; });\n        }\n        setTimeout(function () {\n            interval.current = window.setInterval(changeHand, 100);\n        }, 1000);\n    }; };\n    return (React.createElement(React.Fragment, null,\n        React.createElement(\"div\", { id: \"computer\", style: {\n                background: \"url(https://en.pimg.jp/023/182/267/1/23182267.jpg) \" + imgCoord + \" 0\"\n            } }),\n        React.createElement(\"div\", null,\n            React.createElement(\"button\", { id: \"rock\", className: \"btn\", onClick: onClickBtn(\"바위\") }, \"\\uBC14\\uC704\"),\n            React.createElement(\"button\", { id: \"scissor\", className: \"btn\", onClick: onClickBtn(\"가위\") }, \"\\uAC00\\uC704\"),\n            React.createElement(\"button\", { id: \"paper\", className: \"btn\", onClick: onClickBtn(\"보\") }, \"\\uBCF4\")),\n        React.createElement(\"div\", null, result),\n        React.createElement(\"div\", null,\n            \"\\uD604\\uC7AC \",\n            score,\n            \" \\uC810\")));\n};\nexports.default = RSP;\n\n\n//# sourceURL=webpack://lecture/./RSP.tsx?");
+eval("\nexports.__esModule = true;\nvar React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\nvar Ball = function (_a) {\n    var number = _a.number;\n    var background;\n    if (number <= 10) {\n        background = \"red\";\n    }\n    else if (number <= 20) {\n        background = \"orange\";\n    }\n    else if (number <= 30) {\n        background = \"yellow\";\n    }\n    else if (number <= 40) {\n        background = \"blue\";\n    }\n    else {\n        background = \"green\";\n    }\n    return (React.createElement(\"div\", { className: \"ball\", style: { background: background } }, number));\n};\nexports.default = Ball;\n\n\n//# sourceURL=webpack://lecture/./Ball.tsx?");
+
+/***/ }),
+
+/***/ "./Lotto.tsx":
+/*!*******************!*\
+  !*** ./Lotto.tsx ***!
+  \*******************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nvar __spreadArray = (this && this.__spreadArray) || function (to, from) {\n    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)\n        to[j] = from[i];\n    return to;\n};\nexports.__esModule = true;\nvar React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\nvar Ball_1 = __webpack_require__(/*! ./Ball */ \"./Ball.tsx\");\nvar react_1 = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\nfunction getWinNumbers() {\n    console.log(\"getWinNumbers\");\n    var candidate = Array(45)\n        .fill(null)\n        .map(function (v, i) { return i + 1; });\n    var shuffle = [];\n    while (candidate.length > 0) {\n        shuffle.push(candidate.splice(Math.floor(Math.random() * candidate.length), 1)[0]);\n    }\n    var bonusNumber = shuffle[shuffle.length - 1];\n    var winNumbers = shuffle.slice(0, 6).sort(function (p, c) { return p - c; });\n    return __spreadArray(__spreadArray([], winNumbers), [bonusNumber]);\n}\nvar Lotto = function () {\n    var lottoNumbers = react_1.useMemo(function () { return getWinNumbers(); }, []);\n    var _a = react_1.useState(lottoNumbers), winNumbers = _a[0], setWinNumbers = _a[1];\n    var _b = react_1.useState([]), winBalls = _b[0], setWinBalls = _b[1];\n    var _c = react_1.useState(null), bonus = _c[0], setBonus = _c[1];\n    var _d = react_1.useState(false), redo = _d[0], setRedo = _d[1];\n    var timeouts = react_1.useRef([]);\n    react_1.useEffect(function () {\n        console.log(\"useEffect\");\n        var _loop_1 = function (i) {\n            timeouts.current[i] = window.setTimeout(function () {\n                setWinBalls(function (prevBalls) { return __spreadArray(__spreadArray([], prevBalls), [winNumbers[i]]); });\n            }, (i + 1) * 1000);\n        };\n        for (var i = 0; i < winNumbers.length - 1; i++) {\n            _loop_1(i);\n        }\n        timeouts.current[6] = window.setTimeout(function () {\n            setBonus(winNumbers[6]);\n            setRedo(true);\n        }, 7000);\n        return function () {\n            timeouts.current.forEach(function (v) {\n                clearTimeout(v);\n            });\n        };\n    }, [timeouts.current]); // 빈 배열이면 componentDidMount와 동일\n    // 배열에 요소가 있으면 componentDidMount랑 componentDidUpdate 둘 다 수행\n    react_1.useEffect(function () {\n        console.log(\"로또 숫자를 생성합니다.\");\n    }, [winNumbers]);\n    var onClickRedo = react_1.useCallback(function () {\n        console.log(\"onClickRedo\");\n        console.log(winNumbers);\n        setWinNumbers(getWinNumbers());\n        setWinBalls([]);\n        setBonus(null);\n        setRedo(false);\n        timeouts.current = [];\n    }, [winNumbers]);\n    return (React.createElement(React.Fragment, null,\n        React.createElement(\"div\", null, \"\\uB2F9\\uCCA8 \\uC22B\\uC790\"),\n        React.createElement(\"div\", { id: \"\\uACB0\\uACFC\\uCC3D\" }, winBalls.map(function (v) { return (React.createElement(Ball_1[\"default\"], { key: v, number: v })); })),\n        React.createElement(\"div\", null, \"\\uBCF4\\uB108\\uC2A4!\"),\n        bonus && React.createElement(Ball_1[\"default\"], { number: bonus }),\n        redo && React.createElement(\"button\", { onClick: onClickRedo }, \"\\uD55C \\uBC88 \\uB354!\")));\n};\nexports.default = Lotto;\n\n\n//# sourceURL=webpack://lecture/./Lotto.tsx?");
 
 /***/ }),
 
@@ -27,7 +38,7 @@ eval("\nexports.__esModule = true;\nvar React = __webpack_require__(/*! react */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
-eval("\nexports.__esModule = true;\nvar React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\nvar ReactDOM = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\nvar root_1 = __webpack_require__(/*! react-hot-loader/root */ \"./node_modules/react-hot-loader/root.js\");\nvar RSP_1 = __webpack_require__(/*! ./RSP */ \"./RSP.tsx\");\nvar Hot = root_1.hot(RSP_1[\"default\"]); // HOC\nReactDOM.render(React.createElement(Hot, null), document.getElementById(\"root\"));\n\n\n//# sourceURL=webpack://lecture/./client.tsx?");
+eval("\nexports.__esModule = true;\nvar React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\nvar ReactDOM = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\nvar root_1 = __webpack_require__(/*! react-hot-loader/root */ \"./node_modules/react-hot-loader/root.js\");\nvar Lotto_1 = __webpack_require__(/*! ./Lotto */ \"./Lotto.tsx\");\nvar Hot = root_1.hot(Lotto_1[\"default\"]); // HOC\nReactDOM.render(React.createElement(Hot, null), document.getElementById(\"root\"));\n\n\n//# sourceURL=webpack://lecture/./client.tsx?");
 
 /***/ }),
 
@@ -182,7 +193,7 @@ eval("\n\nif (false) {} else {\n  module.exports = __webpack_require__(/*! ./cjs
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
