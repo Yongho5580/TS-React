@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { hot } from "react-hot-loader/root";
-import TicTacToe from "./TicTacToe";
+import Games from "./Games";
 
-const Hot = hot(TicTacToe); // HOC
+const Hot = hot(Games); // HOC
 
 ReactDOM.render(<Hot />, document.getElementById("root"));
